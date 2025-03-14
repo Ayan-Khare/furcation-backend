@@ -11,6 +11,7 @@ from fastapi.staticfiles import StaticFiles
 import torch
 from ultralytics import YOLO  
 import logging
+import gdown
 
 app = FastAPI()
 
@@ -34,6 +35,29 @@ FURCATION_MODEL = load_model("model/DenseNet201_FT.h5")
 BONE_LOSS_MODEL = load_model("model/boneloss_marker.h5")
 FURCATION_MARKER_MODEL = load_model("model/furcation_marker.h5")
 TEETH_EXTRACTOR_MODEL = YOLO("model/teeth_extractor.pt")
+
+MODEL_DIR = "model"
+os.makedirs(MODEL_DIR, exist_ok=True)
+
+# Google Drive file IDs (Replace these with actual file IDs)
+MODEL_FILES = {
+    "DenseNet201_FT.h5": "1viJkoqpHkQedtPo3dfxsnyyTIiiVlGlO",
+    "boneloss_marker.h5": "1BIpY_zH4ySlhjEe0nCzXYhUjgyGPr3Qa",
+    "furcation_marker.h5": "1xJ3cAhCvnMxKeBiMim7_IS5RkiOOgQi_",
+    "teeth_extractor.pt": "1GJszJvwMVH1oYFrdVhVqaMHoqvf9bp1c",
+}
+
+def download_model(model_name, file_id):
+    """Download model from Google Drive if not already present."""
+    model_path = os.path.join(MODEL_DIR, model_name)
+    if not os.path.exists(model_path):
+        logging.info(f"Downloading {model_name} from Google Drive...")
+        gdown.download(f"https://drive.google.com/uc?id={file_id}", model_path, quiet=False)
+    return model_path
+
+# Download models if not present
+for model_name, file_id in MODEL_FILES.items():
+    download_model(model_name, file_id)
 
 app.mount("/uploads", StaticFiles(directory=UPLOAD_FOLDER), name="uploads")
 
