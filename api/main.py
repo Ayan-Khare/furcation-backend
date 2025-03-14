@@ -31,10 +31,6 @@ CLASS_LABELS = {0: "With Furcation", 1: "Without Furcation"}
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-FURCATION_MODEL = load_model("model/DenseNet201_FT.h5")
-BONE_LOSS_MODEL = load_model("model/boneloss_marker.h5")
-FURCATION_MARKER_MODEL = load_model("model/furcation_marker.h5")
-TEETH_EXTRACTOR_MODEL = YOLO("model/teeth_extractor.pt")
 
 MODEL_DIR = "model"
 os.makedirs(MODEL_DIR, exist_ok=True)
@@ -58,6 +54,12 @@ def download_model(model_name, file_id):
 # Download models if not present
 for model_name, file_id in MODEL_FILES.items():
     download_model(model_name, file_id)
+
+
+FURCATION_MODEL = load_model("model/DenseNet201_FT.h5")
+BONE_LOSS_MODEL = load_model("model/boneloss_marker.h5")
+FURCATION_MARKER_MODEL = load_model("model/furcation_marker.h5")
+TEETH_EXTRACTOR_MODEL = YOLO("model/teeth_extractor.pt")
 
 app.mount("/uploads", StaticFiles(directory=UPLOAD_FOLDER), name="uploads")
 
