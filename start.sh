@@ -1,2 +1,7 @@
 #!/bin/bash
-gunicorn -w 4 -k uvicorn.workers.UvicornWorker api.main:app --bind 0.0.0.0:8000 --timeout 0
+
+# Install OpenGL dependencies
+apt-get update && apt-get install -y libgl1-mesa-glx
+
+# Run FastAPI app
+uvicorn api.main:app --host 0.0.0.0 --port $PORT
