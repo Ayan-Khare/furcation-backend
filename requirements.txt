@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+gunicorn
+tensorflow 
+numpy
+pydantic
+pillow
+torch
+ultralytics
