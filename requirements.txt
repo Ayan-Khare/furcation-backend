@@ -1,3 +1,4 @@
+opencv-python-headless
 fastapi
 uvicorn
 gunicorn
@@ -8,4 +9,3 @@ pillow
 torch
 ultralytics
 gdown
-opencv-python-headless
